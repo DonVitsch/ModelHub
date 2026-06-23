@@ -13,9 +13,9 @@
 
 <table>
 <tr>
-<td><img src="screenshots/cloud_mode.png" width="260"/></td>
-<td><img src="screenshots/local_mode.png" width="260"/></td>
-<td><img src="screenshots/image_mode.png" width="260"/></td>
+<td><img src="screenshots/Screenshot_20260623_115612.png" width="260"/></td>
+<td><img src="screenshots/Screenshot_20260623_115910.png" width="260"/></td>
+<td><img src="screenshots/Screenshot_20260623_144951.png" width="260"/></td>
 </tr>
 <tr>
 <td align="center">云端模式</td>
