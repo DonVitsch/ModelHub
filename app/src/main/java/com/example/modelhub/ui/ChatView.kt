@@ -73,6 +73,9 @@ class ChatView(
     private val macLocalButton: LinearLayout
     private val windowsImageButton: LinearLayout
     private val welcomeView: LinearLayout
+    private lateinit var welcomeTitleView: TextView
+    private lateinit var welcomeSubtitleView: TextView
+    private lateinit var loadingStatusView: TextView
     private val renderedMessages = mutableListOf<ChatMessage>()
     private val renderedMessageTexts = mutableMapOf<Int, TextView>()
     private val localModelNames = mutableListOf<String>()
@@ -110,8 +113,8 @@ class ChatView(
             Palette(
                 pageBg = Color.rgb(18, 18, 18),
                 surface = Color.rgb(25, 25, 25),
-                inputBg = Color.rgb(36, 36, 36),
-                border = Color.rgb(58, 58, 58),
+                inputBg = Color.rgb(42, 42, 42),
+                border = Color.rgb(85, 85, 85),
                 textPrimary = Color.rgb(238, 238, 238),
                 textSecondary = Color.rgb(158, 158, 158),
                 accent = Color.WHITE,
@@ -238,8 +241,8 @@ class ChatView(
         }
 
         apiKeyInput = createHeaderInput(context, "OpenRouter API Key", true).apply {
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            transformationMethod = null
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            transformationMethod = android.text.method.PasswordTransformationMethod.getInstance()
             setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     activityWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
@@ -426,13 +429,35 @@ class ChatView(
             visibility = View.GONE
         }
 
+        loadingStatusView = TextView(context).apply {
+            textSize = 12f
+            gravity = Gravity.CENTER
+            setTextColor(palette.textSecondary)
+            visibility = View.GONE
+        }
+
+        val loadingGroup = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            addView(progressBar, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ))
+            addView(loadingStatusView, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, dp(4), 0, 0)
+            })
+        }
+
         root.addView(header)
         root.addView(scrollView, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             0,
             1f
         ))
-        root.addView(progressBar, LinearLayout.LayoutParams(
+        root.addView(loadingGroup, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
@@ -691,6 +716,17 @@ class ChatView(
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         sendButton.isEnabled = !isLoading
         sendButton.text = if (isLoading) "..." else if (currentMode == ChatMode.WINDOWS_LOCAL_IMAGE) "生成" else "发送"
+
+        if (isLoading) {
+            loadingStatusView.text = when (currentMode) {
+                ChatMode.OR_API -> "正在生成回复…"
+                ChatMode.MAC_LOCAL_TEXT -> "本地模型思考中，请稍候…"
+                ChatMode.WINDOWS_LOCAL_IMAGE -> "正在生成图片，可能需要几十秒到几分钟…"
+            }
+            loadingStatusView.visibility = View.VISIBLE
+        } else {
+            loadingStatusView.visibility = View.GONE
+        }
     }
 
     fun getCheckpointText(): String = checkpointInput.text.toString()
@@ -1048,7 +1084,9 @@ class ChatView(
         }
 
         val options = buildModelOptions()
+        val relevantGroups = relevantGroupsForCurrentMode()
         ModelOptionGroup.values().forEach { group ->
+            if (group !in relevantGroups) return@forEach
             val groupOptions = options.filter { it.group == group }
             if (groupOptions.isNotEmpty()) {
                 list.addView(createModelGroupLabel(context, group.title))
@@ -1061,7 +1099,7 @@ class ChatView(
             }
         }
 
-        if (openRouterModels.none { it.modelId.isNotBlank() }) {
+        if (currentMode == ChatMode.OR_API && openRouterModels.none { it.modelId.isNotBlank() }) {
             list.addView(createModelGroupLabel(context, ModelOptionGroup.QUALITY.title))
             list.addView(createModelOptionRow(
                 context = context,
@@ -1081,7 +1119,7 @@ class ChatView(
             })
         }
 
-        if (localModelNames.isEmpty()) {
+        if (currentMode == ChatMode.MAC_LOCAL_TEXT && localModelNames.isEmpty()) {
             list.addView(createModelGroupLabel(context, ModelOptionGroup.LOCAL.title))
             list.addView(createModelOptionRow(
                 context = context,
@@ -1390,7 +1428,7 @@ class ChatView(
             adjustViewBounds = true
             scaleType = ImageView.ScaleType.FIT_CENTER
         }
-        val title = TextView(context).apply {
+        welcomeTitleView = TextView(context).apply {
             text = "嗨，我们进入正题吧"
             textSize = 28f
             typeface = Typeface.DEFAULT
@@ -1398,7 +1436,7 @@ class ChatView(
             setTextColor(palette.textPrimary)
             setPadding(0, dp(20), 0, 0)
         }
-        val subtitle = TextView(context).apply {
+        welcomeSubtitleView = TextView(context).apply {
             text = "今天想聊点什么？"
             textSize = 15f
             gravity = Gravity.CENTER
@@ -1410,18 +1448,29 @@ class ChatView(
             gravity = Gravity.CENTER
             setPadding(dp(18), 0, dp(18), dp(28))
             addView(logo, LinearLayout.LayoutParams(dp(88), dp(88)))
-            addView(title, LinearLayout.LayoutParams(
+            addView(welcomeTitleView, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ))
-            addView(subtitle, LinearLayout.LayoutParams(
+            addView(welcomeSubtitleView, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ))
         }
     }
 
+    private fun updateWelcomeContent() {
+        val (title, subtitle) = when (currentMode) {
+            ChatMode.OR_API -> "嗨，我们进入正题吧" to "先在设置里填好 API Key，点击\"获取模型\"后即可开始对话"
+            ChatMode.MAC_LOCAL_TEXT -> "连接你的本地模型" to "先在设置里填好本地模型地址，点击\"刷新模型\"后即可开始对话"
+            ChatMode.WINDOWS_LOCAL_IMAGE -> "用 ComfyUI 生成图片" to "先在设置里填好服务器地址和模型文件名，描述你想要的画面"
+        }
+        welcomeTitleView.text = title
+        welcomeSubtitleView.text = subtitle
+    }
+
     private fun showWelcomeView() {
+        updateWelcomeContent()
         if (welcomeView.parent != null) {
             (welcomeView.parent as? LinearLayout)?.removeView(welcomeView)
         }
