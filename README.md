@@ -11,7 +11,18 @@
 
 ## 截图
 
-> 在此处替换为你自己的应用截图。
+<table>
+<tr>
+<td><img src="screenshots/cloud_mode.png" width="260"/></td>
+<td><img src="screenshots/local_mode.png" width="260"/></td>
+<td><img src="screenshots/image_mode.png" width="260"/></td>
+</tr>
+<tr>
+<td align="center">云端模式</td>
+<td align="center">本地模式</td>
+<td align="center">生图模式</td>
+</tr>
+</table>
 
 ## 运行方式
 
