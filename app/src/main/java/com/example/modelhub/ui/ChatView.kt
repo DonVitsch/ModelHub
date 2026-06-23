@@ -1153,6 +1153,14 @@ class ChatView(
         dialog.show()
     }
 
+    private fun relevantGroupsForCurrentMode(): Set<ModelOptionGroup> {
+        return when (currentMode) {
+            ChatMode.OR_API -> setOf(ModelOptionGroup.FAST, ModelOptionGroup.QUALITY)
+            ChatMode.MAC_LOCAL_TEXT -> setOf(ModelOptionGroup.LOCAL)
+            ChatMode.WINDOWS_LOCAL_IMAGE -> setOf(ModelOptionGroup.IMAGE)
+        }
+    }
+
     private fun buildModelOptions(): List<ModelOption> {
         val cloudOptions = openRouterModels.filter { it.modelId.isNotBlank() }.map { preset ->
             modelOptionForOpenRouter(preset)
