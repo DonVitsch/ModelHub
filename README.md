@@ -60,7 +60,3 @@ app/src/main/java/com/example/modelhub/
 ## 隐私说明
 
 本仓库不包含任何 API Key、内网 IP 或预设模型名称——这些都需要使用者在 App 内自行填写。如果你 fork 本项目，请同样注意不要把自己的密钥或内网信息提交进版本库。
-
-## License
-
-暂未添加开源协议。如果你想让别人可以自由使用/修改这份代码，可以在 GitHub 仓库页面点击 "Add file" → "Create new file"，文件名输入 `LICENSE`，GitHub 会提示你选择协议模板（个人项目常用 MIT）。
