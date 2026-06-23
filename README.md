@@ -48,6 +48,15 @@
 
 所有配置项均保存在设备本地（`SharedPreferences`），不会上传到任何第三方服务器，仓库中也不包含任何密钥或内网地址。
 
+
+**按需准备的外部服务**（只需要对应模式时才要装，三个互不依赖）
+
+| 模式 | 需要的服务 | 获取方式 |
+| --- | --- | --- |
+| 云端 | OpenRouter 账号 + API Key | [openrouter.ai](https://openrouter.ai/) 注册后在控制台生成 |
+| 本地 | 局域网内运行 Ollama，并已 `ollama pull` 至少一个模型 | [ollama.com](https://ollama.com/) 下载安装 |
+| 生图 | 局域网内运行 ComfyUI，并已放好对应的 checkpoint 文件 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 官方仓库 |
+
 ## 技术栈
 
 - Kotlin + AndroidX，原生 View 构建 UI（无 XML 布局，纯代码搭建）
@@ -84,10 +93,3 @@ app/src/main/java/com/example/modelhub/
 - Material Components
 - OkHttp 4.12.0 + okhttp-dnsoverhttps（网络请求与流式响应、DNS-over-HTTPS 回退）
 
-**按需准备的外部服务**（只需要对应模式时才要装，三个互不依赖）
-
-| 模式 | 需要的服务 | 获取方式 |
-| --- | --- | --- |
-| 云端 | OpenRouter 账号 + API Key | [openrouter.ai](https://openrouter.ai/) 注册后在控制台生成 |
-| 本地 | 局域网内运行 Ollama，并已 `ollama pull` 至少一个模型 | [ollama.com](https://ollama.com/) 下载安装 |
-| 生图 | 局域网内运行 ComfyUI，并已放好对应的 checkpoint 文件 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 官方仓库 |
