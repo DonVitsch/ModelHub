@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="background">#FAFAFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="cardBg">#F7F7F7</color>
+    <color name="textPrimary">#232323</color>
+    <color name="textSecondary">#7C7C7C</color>
+    <color name="borderColor">#E8E8E8</color>
+    <color name="accent">#000000</color>
+    <color name="bubbleUser">#E8E8E8</color>
+    <color name="bubbleAi">#FFFFFF</color>
+    <color name="inputBg">#F7F7F7</color>
+</resources>
