@@ -1,6 +1,14 @@
-# ModelHub
+<p align="center">
+  <img src="app/src/main/res/drawable-nodpi/modelhub_logo_1024.png" width="160" />
+</p>
 
-一个原生 Android 多模型 AI 工作台，三种模式切换：云端 OpenRouter 对话、本地 Ollama 对话、Windows ComfyUI 远程生图。
+<h1 align="center">ModelHub</h1>
+
+<p align="center">一个原生 Android 多模型 AI 工作台</p>
+
+<p align="center">
+云端 OpenRouter 对话 · 本地 Ollama 对话 · Windows ComfyUI 远程生图，三种模式随时切换
+</p>
 
 ## 功能
 
@@ -60,3 +68,26 @@ app/src/main/java/com/example/modelhub/
 ## 隐私说明
 
 本仓库不包含任何 API Key、内网 IP 或预设模型名称——这些都需要使用者在 App 内自行填写。如果你 fork 本项目，请同样注意不要把自己的密钥或内网信息提交进版本库。
+
+## 运行环境 / 依赖
+
+**构建环境**
+
+- Android Studio（最新稳定版即可）
+- JDK 11
+- Android Gradle Plugin 9.1.1（已在 `gradle/libs.versions.toml` 锁定，Gradle Sync 会自动下载）
+- compileSdk / targetSdk 36，minSdk 26（即 Android 8.0 及以上设备/模拟器）
+
+**第三方库**（已在 `app/build.gradle` 声明，无需手动安装）
+
+- AndroidX：core-ktx、appcompat、activity、constraintlayout
+- Material Components
+- OkHttp 4.12.0 + okhttp-dnsoverhttps（网络请求与流式响应、DNS-over-HTTPS 回退）
+
+**按需准备的外部服务**（只需要对应模式时才要装，三个互不依赖）
+
+| 模式 | 需要的服务 | 获取方式 |
+| --- | --- | --- |
+| 云端 | OpenRouter 账号 + API Key | [openrouter.ai](https://openrouter.ai/) 注册后在控制台生成 |
+| 本地 | 局域网内运行 Ollama，并已 `ollama pull` 至少一个模型 | [ollama.com](https://ollama.com/) 下载安装 |
+| 生图 | 局域网内运行 ComfyUI，并已放好对应的 checkpoint 文件 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 官方仓库 |
