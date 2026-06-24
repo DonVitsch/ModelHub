@@ -7,6 +7,14 @@
 <p align="center">一个原生 Android 多模型 AI 工作台</p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 8.0+"/>
+  <img src="https://img.shields.io/badge/Kotlin-原生应用-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin"/>
+  <img src="https://img.shields.io/badge/minSdk-26-blue" alt="minSdk 26"/>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/DonVitsch/ModelHub" alt="Apache-2.0 License"/></a>
+  <a href="https://github.com/DonVitsch/ModelHub/stargazers"><img src="https://img.shields.io/github/stars/DonVitsch/ModelHub?style=flat" alt="GitHub Stars"/></a>
+</p>
+
+<p align="center">
 云端 OpenRouter 对话 · 本地 Ollama 对话 · Windows ComfyUI 远程生图，三种模式随时切换
 </p>
 
@@ -100,3 +108,7 @@ app/src/main/java/com/example/modelhub/
 ## 隐私说明
 
 所有配置项（API Key、服务器地址、checkpoint 文件名等）只保存在你本机的 `SharedPreferences` 里，不会上传到任何第三方服务器。仓库源码中不包含任何密钥、内网地址或预设模型名称——这些都需要使用者在 App 内自行填写。如果你 fork 本项目，请同样注意不要把自己的密钥或内网信息提交进版本库。
+
+## 开源许可
+
+本项目基于 [Apache License 2.0](LICENSE) 开源。
