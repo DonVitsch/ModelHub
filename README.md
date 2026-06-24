@@ -88,15 +88,14 @@ app/src/main/java/com/example/modelhub/
 
 ## 架构
 
-**模块关系**
+**系统架构图**
 
 <p align="center"><img src="screenshots/architecture.png" width="720"/></p>
 
-**单次请求处理流程**（以三种模式各自的调用链路为例）
+**请求流程图**
 
 <p align="center"><img src="screenshots/request_flow.png" width="560"/></p>
 
-三种模式的服务器地址都是用户在设置面板里手动填写、存进本机 `SharedPreferences` 的，源码里不写死任何地址。
 
 ## 隐私说明
 
