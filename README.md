@@ -86,6 +86,18 @@ app/src/main/java/com/example/modelhub/
 └── data/                    # 消息数据模型
 ```
 
+## 架构
+
+**模块关系**
+
+<p align="center"><img src="screenshots/architecture.png" width="720"/></p>
+
+**单次请求处理流程**（以三种模式各自的调用链路为例）
+
+<p align="center"><img src="screenshots/request_flow.png" width="560"/></p>
+
+三种模式的服务器地址都是用户在设置面板里手动填写、存进本机 `SharedPreferences` 的，源码里不写死任何地址。
+
 ## 隐私说明
 
 所有配置项（API Key、服务器地址、checkpoint 文件名等）只保存在你本机的 `SharedPreferences` 里，不会上传到任何第三方服务器。仓库源码中不包含任何密钥、内网地址或预设模型名称——这些都需要使用者在 App 内自行填写。如果你 fork 本项目，请同样注意不要把自己的密钥或内网信息提交进版本库。
