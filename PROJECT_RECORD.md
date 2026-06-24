@@ -96,7 +96,7 @@ ChatMode.WINDOWS_LOCAL_IMAGE -> sendComfyUIMessage(model, question)
 用户提供的工作流文件：
 
 ```text
-/Users/don/Downloads/image_z_image.json
+image_z_image.json
 ```
 
 Z-Image 模型文件：
