@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-云端 OpenRouter 对话 · 本地 Ollama 对话 · Windows ComfyUI 远程生图，三种模式随时切换
+云端 OpenRouter 对话 · 本地 Ollama 对话 · Windows ComfyUI 远程生图
 </p>
 
 ---
