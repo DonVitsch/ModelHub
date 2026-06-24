@@ -86,13 +86,13 @@ app/src/main/java/com/example/modelhub/
 └── data/                    # 消息数据模型
 ```
 
-## 架构
 
-**系统架构图**
+
+## 系统架构图
 
 <p align="center"><img src="screenshots/architecture.png" width="720"/></p>
 
-**请求流程图**
+## 请求流程图
 
 <p align="center"><img src="screenshots/request_flow.png" width="560"/></p>
 
