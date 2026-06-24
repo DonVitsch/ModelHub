@@ -135,7 +135,7 @@ z_image_bf16.safetensors
 这次使用的工作流来自：
 
 ```text
-/Users/don/Downloads/image_z_image.json
+image_z_image.json
 ```
 
 工作流对应的核心模型是：
